@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Animal.h"
+#include "IException.h"
 #include <vector>
 using namespace std;
 
@@ -8,14 +9,8 @@ class Cage{
     Animal *animal1;
     Animal *animal2;
 public:
-    Cage(Animal *_animal1 = nullptr, Animal *_animal2 = nullptr): animal1(_animal1), animal2(_animal2){
-        cout << "Create Cage " << this << endl;
-    }
-    ~Cage(){
-        cout << "Delete Cage " << this << endl;
-//        delete animal1;
-//        delete animal2;
-    }
+    Cage(Animal *_animal1 = nullptr, Animal *_animal2 = nullptr): animal1(_animal1), animal2(_animal2){}
+    ~Cage(){}
 
     Animal* getAnimal(int a){
         switch(a){
@@ -25,14 +20,41 @@ public:
         }
     }
 
+    Animal* setChekSetAnimal(Animal *_animal1, Animal *_animal2){
+        if(_animal2 != nullptr && _animal1 != nullptr){
+            if((_animal1->getType() && !_animal2->getType()) || (!_animal1->getType() && _animal2->getType())){
+                throw new IntEx(1);
+            }
+            if(_animal1->getType() && _animal2->getType()){
+                throw new IntEx(2);
+            }
+        }
+        return _animal1;
+    }
+
     void setAnimal(Animal* _animal, int a){
-        cout << "setAnimalFun " << _animal << " a = " << a << endl;
         switch(a){
-            case 1: {animal1 = _animal;
-            cout << "Set to animal1 " << animal1 << endl;
-            break;}
-            case 2: {animal2 = _animal;
-                cout << "Set to animal2 " << animal2 << endl;break;}
+            case 1: {
+                try {
+//                    animal1 = _animal;
+                    animal1 = setChekSetAnimal(_animal, animal2);
+                }
+                catch (IException* e){
+                    e->show();
+                }
+                break;
+            }
+            case 2: {
+                try {
+//                    ChekSetAnimal(_animal, animal1);
+//                    animal2 = _animal;
+                    animal2 = setChekSetAnimal(_animal, animal1);
+                }
+                catch (IException* e){
+                    e->show();
+                }
+                break;
+            }
             default:;
         }
     }
@@ -49,12 +71,9 @@ public:
        delete[] list;
    }
    void add(){
-       cout << "Add---------------" << endl;
        Cage* tmp = new Cage[n+1];
        for (int i = 0; i < n; i++) {
-//           tmp[i] = list[i].getAnimal(1);
            tmp[i].setAnimal(list[i].getAnimal(1), 1);
-           cout << &tmp[i] << " animal = " << tmp[i].getAnimal(1) << " <- " << &list[i] << " animal = " << list[i].getAnimal(1) << endl;
        }
        delete[] list;
        list = tmp;

@@ -9,8 +9,8 @@ int main() {
     Zoo zoo;
     zoo.add();
     zoo.add();
-    zoo.getCage(0).setAnimal(new Goat(), 1);
-    zoo.getCage(1).setAnimal(new Hohotun(), 2);
+    zoo.getCage(0).setAnimal(new Wolf(), 1);
+    zoo.getCage(0).setAnimal(new Hohotun(), 2);
     zoo.add();
     zoo.getCage(2).setAnimal(new Hohotun(), 1);
 //    zoo.add(Cage(new Hohotun));

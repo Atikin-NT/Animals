@@ -8,7 +8,6 @@ public:
     virtual bool getType() = 0;
     virtual string getName() = 0;
     virtual string getVoice() = 0;
-    virtual Animal* Clone() = 0;
 
     Animal(){
         cout << "Create Animal " << this << endl;
@@ -45,10 +44,6 @@ class Goat: public Herbivore{
 public:
     string getName() override { return "Ластоногая коза"; }
     string getVoice() override { return "Вуббалубдабдаб"; }
-    Animal* Clone() override{
-        return new Goat;
-    }
-
 };
 
 class Bear: public Predator{
@@ -61,9 +56,6 @@ class Hohotun: public Herbivore{
 public:
     string getName() override { return "Древесный хохотун"; }
     string getVoice() override { return "Хохо"; }
-    Animal* Clone() override{
-        return new Hohotun;
-    }
 };
 
 class Fox: public Predator{
