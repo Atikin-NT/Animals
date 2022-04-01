@@ -22,15 +22,11 @@ public:
 class Herbivore: public Animal{
 public:
     bool getType() override { return false; }
-    string getName() override { return "0"; }
-    string getVoice() override { return "0"; }
 };
 
 class Predator: public Animal{
 public:
     bool getType() override { return true; }
-    string getName() override { return "1"; }
-    string getVoice() override { return "1"; }
 };
 
 class Rabbit: public Herbivore{

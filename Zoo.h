@@ -1,93 +1,71 @@
 #pragma once
 
 #include "Animal.h"
+#include <vector>
 using namespace std;
 
 class Cage{
-    Animal *animal;
+    Animal *animal1;
+    Animal *animal2;
 public:
-    Cage(){
-        animal = nullptr;
-    }
-    Cage(Animal *_animal): animal(_animal){
+    Cage(Animal *_animal1 = nullptr, Animal *_animal2 = nullptr): animal1(_animal1), animal2(_animal2){
         cout << "Create Cage " << this << endl;
     }
-    Cage(const Cage &cageCopy){
-        this->animal = cageCopy.animal;
-        cout << "Copy Cage " << this << endl;
-    }
-
     ~Cage(){
         cout << "Delete Cage " << this << endl;
-        if (animal != nullptr) {
-            cout << "Delete Animal " << animal << endl;
-//            delete animal;
-        }
-    }
-    int check(){
-        if (animal == nullptr) return 0;
-        return 1;
+//        delete animal1;
+//        delete animal2;
     }
 
-    Animal* getAnimal(){
-        return animal;
+    Animal* getAnimal(int a){
+        switch(a){
+            case 1: return animal1;
+            case 2: return animal2;
+            default: return nullptr;
+        }
     }
 
-    void setAnimal(Animal *p){
-        if(p == nullptr)
-            animal = nullptr;
-        else{
-            animal = p->Clone();
-//            cout << p->getName() << " Animal = " << animal << " Cage = " << this << " P = " << p << endl;
-//        cout << animal->getType();
-//            cout << "Set Animal p(" << p->getName() << ") -> this(" << animal->getName() << ")" << endl;
+    void setAnimal(Animal* _animal, int a){
+        cout << "setAnimalFun " << _animal << " a = " << a << endl;
+        switch(a){
+            case 1: {animal1 = _animal;
+            cout << "Set to animal1 " << animal1 << endl;
+            break;}
+            case 2: {animal2 = _animal;
+                cout << "Set to animal2 " << animal2 << endl;break;}
+            default:;
         }
-//        cout << p->getName() << " Animal = " << animal << " Cage = " << this << " P = " << p << endl;
     }
 
     friend ostream& operator<<(ostream& os, const Cage& dt);
 };
 
 class Zoo{
-    Cage *list;
+    Cage* list;
     int n;
 public:
-    Zoo(){
-        list = new Cage[0];
-        n = 0;
-        cout << "Create Zoo " << this << endl;
-    }
-    ~Zoo(){
-        cout << "Delete Zoo" << this << endl;
-        delete[] list;
-    }
+   Zoo(): list(nullptr), n(0){}
+   ~Zoo(){
+       delete[] list;
+   }
+   void add(){
+       cout << "Add---------------" << endl;
+       Cage* tmp = new Cage[n+1];
+       for (int i = 0; i < n; i++) {
+//           tmp[i] = list[i].getAnimal(1);
+           tmp[i].setAnimal(list[i].getAnimal(1), 1);
+           cout << &tmp[i] << " animal = " << tmp[i].getAnimal(1) << " <- " << &list[i] << " animal = " << list[i].getAnimal(1) << endl;
+       }
+       delete[] list;
+       list = tmp;
+       n++;
+   }
 
-    void add(const Cage &cage){
-        cout << "Add new to Zoo ------------" << endl;
-        Cage *newCageList = new Cage[n];
-        for(int i = 0; i < n; i++){
-            newCageList[i].setAnimal(list[i].getAnimal());
-//            newCageList[i] = list[i];
-            cout << "tmp = " << &newCageList[i] << " anim = " << newCageList[i].getAnimal()  << " <- " << " original = " << &list[i] << " anim = " << list[i].getAnimal() << endl;
-//            delete &list[i];
-        }
-        delete[] list;
-        list = new Cage[n+1];
-        cout << "CageList: " << endl;
-        for(int i = 0; i < n; i++){
-//            list[i] = newCageList[i];
-            list[i].setAnimal(newCageList[i].getAnimal());
-            cout << "tmp = " << &newCageList[i] << " anim = " << newCageList[i].getAnimal()  << " -> " << " original = " << &list[i] << " anim = " << list[i].getAnimal() << endl;
-        }
-        delete[] newCageList;
-        list[n] = cage;
-        n++;
-        for(int i = 0; i < n; i++){
-            cout << i << " " << &list[i] << endl;
-        }
-    }
+   int size() const{
+       return n;
+   }
+   Cage& getCage(int id){
+       return list[id];
+   }
 
-    Cage& getCage(int id){
-        return list[id];
-    }
 };
