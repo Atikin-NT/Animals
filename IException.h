@@ -12,7 +12,5 @@ class IntEx: public IException{
     int a;
 public:
     IntEx(int _a): a(_a){}
-    void show() override {
-        cout << "Ex number: " << a << endl;
-    }
+    void show() override;
 };

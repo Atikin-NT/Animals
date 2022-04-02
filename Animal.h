@@ -34,40 +34,10 @@ public:
     string getVoice() override { return "Фрфрфрфр"; }
 };
 
-class Wolf: public Predator{
-public:
-    string getName() override { return "Волк"; }
-    string getVoice() override { return "Ауф"; }
-};
-
-class Goat: public Herbivore{
-public:
-    string getName() override { return "Ластоногая коза"; }
-    string getVoice() override { return "Вуббалубдабдаб"; }
-};
-
-class Bear: public Predator{
-public:
-    string getName() override { return "Медведь"; }
-    string getVoice() override { return "Аррррррррр"; }
-};
-
 class Hohotun: public Herbivore{
 public:
     string getName() override { return "Древесный хохотун"; }
     string getVoice() override { return "Хохо"; }
-};
-
-class Fox: public Predator{
-public:
-    string getName() override { return "Лиса"; }
-    string getVoice() override { return "Mimimimimimimi"; }
-};
-
-class CrawlOut: public Herbivore{
-public:
-    string getName() override { return "Подкустовый выползень"; }
-    string getVoice() override { return "Оаоаоаоаоаоа"; }
 };
 
 class Ferret: public Predator{
