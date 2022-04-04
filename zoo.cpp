@@ -17,5 +17,7 @@ Cage& Zoo::getCage(int id){
 }
 
 void Zoo::setAnimalInCage(Animal* animal, int idCage, int a){
+    if (idCage < 0 || idCage >= n) throw new IntEx(3);
+
     list[idCage].setAnimal(animal, a);
 }

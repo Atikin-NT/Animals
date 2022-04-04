@@ -8,7 +8,7 @@ int main() {
 
     IMenu menu = IMenu(new Zoo());
 
-    int n;
+    int n, tmp;
     do {
         menu.print_menu();
         cin >> n;
@@ -38,7 +38,7 @@ int main() {
             }
         }
         if(n != 0){
-            system("sleep 6");
+            cin >> tmp;
         }
     }while(n != 0);
     return 0;

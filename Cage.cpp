@@ -1,7 +1,3 @@
-//
-// Created by atikin on 02.04.2022.
-//
-
 #include "Cage.h"
 
 
@@ -29,7 +25,6 @@ void Cage::setAnimal(Animal* _animal, int a){
     switch(a){
         case 1: {
             try {
-//                if(_animal == nullptr){ delete animal1; animal1 = nullptr;}
                 if(SetAndCheckAnimal(_animal, animal2)){
                     delete animal1;
                     animal1 = _animal;
@@ -37,6 +32,7 @@ void Cage::setAnimal(Animal* _animal, int a){
             }
             catch (IException* e){
                 e->show();
+                delete e;
                 delete _animal;
             }
             break;
@@ -50,6 +46,7 @@ void Cage::setAnimal(Animal* _animal, int a){
             }
             catch (IException* e){
                 e->show();
+                delete e;
                 delete _animal;
             }
             break;

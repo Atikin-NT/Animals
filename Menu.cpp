@@ -24,6 +24,8 @@ void IMenu::addCage(){
 
 void IMenu::addAnimalToCage(){
     int cage;
+    cout << "Список существующих клеток: " << endl;
+    walkInZoo();
     cout << "В какую клетку вы хотите посадить животное" << endl;
     cin >> cage;
 
@@ -56,7 +58,14 @@ void IMenu::addAnimalToCage(){
     }
 
 //    cage.setAnimal(animal, n);
-    zoo->setAnimalInCage(animal, cage, leftOrRight);
+    try{
+        zoo->setAnimalInCage(animal, cage, leftOrRight);
+    }
+    catch (IException* e){
+        e->show();
+        delete e;
+    }
+//    zoo->setAnimalInCage(animal, cage, leftOrRight);
 }
 
 void IMenu::removeAnimalFromCage(){
