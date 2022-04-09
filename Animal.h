@@ -10,11 +10,11 @@ public:
     virtual string getVoice() = 0;
 
     Animal(){
-        cout << "Create Animal " << this << endl;
+//        cout << "Create Animal " << this << endl;
     }
 
     ~Animal(){
-        cout << "Delete Animal " << this << endl;
+//        cout << "Delete Animal " << this << endl;
     }
 };
 

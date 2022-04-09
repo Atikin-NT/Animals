@@ -1,77 +1,81 @@
 #include "Cage.h"
 
-
-Animal* Cage::getAnimal(int a){
-    switch(a){
-        case 1: return animal1;
-        case 2: return animal2;
-        default: return nullptr;
-    }
-}
-
-bool Cage::SetAndCheckAnimal(Animal *_animal1, Animal *_animal2){
-    if(_animal2 != nullptr && _animal1 != nullptr){
-        if((_animal1->getType() && !_animal2->getType()) || (!_animal1->getType() && _animal2->getType())){
-            throw new IntEx(1);
-        }
-        if(_animal1->getType() && _animal2->getType()){
-            throw new IntEx(2);
+void Cage::setAnimal(Animal* animal, int idAnimal){
+    if (idAnimal < 0 || idAnimal >= n)
+        throw new IntEx(3);
+    if (animal->getType()){
+        for (int i = 0; i < n; i++) {
+            if(animalList[i] != nullptr)
+                throw new IntEx(1);
         }
     }
-    return true;
-}
-
-void Cage::setAnimal(Animal* _animal, int a){
-    switch(a){
-        case 1: {
-            try {
-                if(SetAndCheckAnimal(_animal, animal2)){
-                    delete animal1;
-                    animal1 = _animal;
-                }
-            }
-            catch (IException* e){
-                e->show();
-                delete e;
-                delete _animal;
-            }
-            break;
+    else{
+        for (int i = 0; i < n; i++) {
+            if(animalList[i] != nullptr && animalList[i]->getType())
+                throw new IntEx(2);
         }
-        case 2: {
-            try {
-                if(SetAndCheckAnimal(_animal, animal1)){
-                    delete animal2;
-                    animal2 = _animal;
-                }
-            }
-            catch (IException* e){
-                e->show();
-                delete e;
-                delete _animal;
-            }
-            break;
-        }
-        default:;
     }
+    delete animalList[idAnimal];
+    animalList[idAnimal] = animal;
 }
 
-ostream& operator<<(ostream& os, const Cage &cage)
+void Cage::addPlaceForAnimal(){
+    Animal** newAnimalList = new Animal*[n+1];
+    for (int i = 0; i < n; i++) {
+        newAnimalList[i] = animalList[i];
+        animalList[i] = nullptr;
+    }
+    delete animalList;
+    animalList = newAnimalList;
+    animalList[n] = nullptr;
+    n++;
+}
+
+ostream& operator<<(ostream& os, Cage &cage)
 {
-    if (cage.animal1 != nullptr)
-    {
-        os << "\e[01;38;05;107mЖивотное 1:\e[0m " << cage.animal1->getName() << " | \e[01;38;05;107mГолос:\e[0m " << cage.animal1->getVoice()
-           << " | \e[01;38;05;107mВид:\e[0m " << cage.animal1->getType() << "     ";
-    }
-    else{
-        os << "\e[01;38;05;107mЖивотное 1:\e[0m " << "Пусто ";
-    }
-    if (cage.animal2 != nullptr)
-    {
-        os << "\e[01;38;05;107mЖивотное 2:\e[0m " << cage.animal2->getName() << " | \e[01;38;05;107mГолос:\e[0m " << cage.animal2->getVoice()
-           << " | \e[01;38;05;107mВид:\e[0m " << cage.animal2->getType() << "     ";
-    }
-    else{
-        os << "\e[01;38;05;107mЖивотное 2:\e[0m " << "Пусто ";
+    cout << "Список животных в клетке:" << endl;
+    Animal* tmp;
+    for (int i = 0; i < cage.n; i++) {
+        cout << i << ") ";
+        tmp = cage.animalList[i];
+        if(tmp != nullptr)
+            os << "\e[01;38;05;107mЖивотное:\e[0m " << tmp->getName() << " | \e[01;38;05;107mГолос:\e[0m " << tmp->getVoice()
+               << " | \e[01;38;05;107mВид:\e[0m " << tmp->getType() << "     ";
+        else
+            os << "Пусто";
     }
     return os;
+}
+
+void Cage::print(){
+    cout << "\t\e[01;38;05;222mСписок животных в клетке:\e[0m" << endl;
+    Animal* tmp;
+    for (int i = 0; i < n; i++) {
+        cout << "\t\t" << i << ") ";
+        tmp = animalList[i];
+        if(tmp != nullptr)
+            cout << "\e[01;38;05;107mЖивотное:\e[0m " << tmp->getName() << " | \e[01;38;05;107mГолос:\e[0m " << tmp->getVoice()
+               << " | \e[01;38;05;107mВид:\e[0m " << tmp->getType() << "     ";
+        else
+            cout << "Пусто";
+        cout << endl;
+    }
+    if(n == 0)
+        cout << "\t\tВ клетке пусто";
+    cout << endl;
+}
+
+Cage& Cage::operator=(const Cage& right) {
+    if (this == &right)
+        return *this;
+
+    delete[] animalList;
+    animalList = new Animal*[right.n];
+    n = right.n;
+    for (int i = 0; i < right.n; i++) {
+        animalList[i] = right.animalList[i];
+        right.animalList[i] = nullptr;
+    }
+
+    return *this;
 }

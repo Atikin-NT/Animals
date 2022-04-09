@@ -6,6 +6,7 @@ using namespace std;
 class IException{
 public:
     virtual void show() = 0;
+    virtual ~IException(){}
 };
 
 class IntEx: public IException{
@@ -13,4 +14,5 @@ class IntEx: public IException{
 public:
     IntEx(int _a): a(_a){}
     void show() override;
+    ~IntEx(){}
 };

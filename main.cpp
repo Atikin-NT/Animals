@@ -12,6 +12,7 @@ int main() {
     do {
         menu.print_menu();
         cin >> n;
+        cout << endl;
         switch(n){
             case 1:{
                 menu.walkInZoo();
@@ -25,21 +26,18 @@ int main() {
                 menu.addAnimalToCage();
                 break;
             }
-            case 4:{
-                menu.removeAnimalFromCage();
-                break;
-            }
-            case 5:{
-                menu.removeCage();
-                break;
-            }
             default:{
                 n = 0;
             }
         }
-        if(n != 0){
-            cin >> tmp;
-        }
+//        if(n != 0){
+//            cin >> tmp;
+//        }
+        cout << endl;
     }while(n != 0);
     return 0;
 }
+
+
+// теперь неограниченное число животных в клетке
+// если нельзя посадить в клетку, то купить клетку и туда посадить

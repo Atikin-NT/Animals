@@ -1,19 +1,18 @@
 #include "Menu.h"
 
 void IMenu::print_menu(){
-    system("clear");
-    cout << "Выберите действие:" << endl;
+//    system("clear");
+    cout << "\e[01;38;05;222mВыберите действие:\e[0m" << endl;
     cout << "1) Прогуляться по зоопарку" << endl;
     cout << "2) Добавить клетку" << endl;
     cout << "3) Поместить животное в клетку" << endl;
-    cout << "4) Убрать животное из клетки" << endl;
-    cout << "5) Убрать клетку" << endl;
     cout << ">";
 }
 
 void IMenu::walkInZoo(){
     for(int i = 0; i < zoo->size(); i++){
-        cout << i << " \e[01;38;05;222m В клетке \e[0m" << ": " << zoo->getCage(i) << endl;
+        cout << i << " \e[01;38;05;222m В клетке \e[0m" << ": " << endl;
+        zoo->getCage(i).print();
     }
 }
 
@@ -24,21 +23,20 @@ void IMenu::addCage(){
 
 void IMenu::addAnimalToCage(){
     int cage;
-    cout << "Список существующих клеток: " << endl;
+    cout << "\e[01;38;05;222mСписок существующих клеток: \e[0m" << endl;
     walkInZoo();
-    cout << "В какую клетку вы хотите посадить животное" << endl;
+    cout << endl << "В какую клетку вы хотите посадить животное" << endl;
+    cout << ">";
     cin >> cage;
 
 //    Cage cage = zoo->getCage(n);
-    int leftOrRight;
-    cout << "В какую часть клетки выхотите посадить животное" << endl;
-    cout << "1) Левую" << endl;
-    cout << "2) Правую" << endl;
+    int idAnimal;
+    cout << endl <<"В какое место клетки выхотите посадить животное(-1 - добавить в конец)" << endl;
     cout << ">";
-    cin >> leftOrRight;
+    cin >> idAnimal;
 
     int animalId;
-    cout << "Какого животного вы хотите посадить?" << endl;
+    cout << endl << "Какого животного вы хотите посадить?" << endl;
     cout << "1) Заяц" << endl;
     cout << "2) Древесный хохотун" << endl;
     cout << "3) Хорёк-паникёр" << endl;
@@ -56,34 +54,5 @@ void IMenu::addAnimalToCage(){
         case 5: {animal = new FlyBear(); break;}
         default: {animal = nullptr; break;}
     }
-
-//    cage.setAnimal(animal, n);
-    try{
-        zoo->setAnimalInCage(animal, cage, leftOrRight);
-    }
-    catch (IException* e){
-        e->show();
-        delete e;
-    }
-//    zoo->setAnimalInCage(animal, cage, leftOrRight);
-}
-
-void IMenu::removeAnimalFromCage(){
-    int n;
-    cout << "Из какой клетки вы хотите убрать животное" << endl;
-    cin >> n;
-
-    Cage& cage = zoo->getCage(n);
-    cout << "Из какой части клетки выхотите убрать животное" << endl;
-    cout << "1) Левую" << endl;
-    cout << "2) Правую" << endl;
-    cout << ">";
-    cin >> n;
-
-    cage.setAnimal(nullptr, n);
-}
-
-void IMenu::removeCage(){
-    cout << "\e[01;38;05;107mТехнические шоколадки:)\e[0m" << endl;
-    cout << "\e[01;38;05;107mФункция в разработке\e[0m" << endl;
+    zoo->setAnimalInCage(animal, cage, idAnimal);
 }

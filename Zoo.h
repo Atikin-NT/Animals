@@ -6,16 +6,16 @@
 using namespace std;
 
 class Zoo{
-    Cage* list;
+    Cage* cageList;
     int n;
 public:
-   Zoo(): list(nullptr), n(0){}
+   Zoo(): cageList(nullptr), n(0){}
    ~Zoo(){
-       delete[] list;
+       delete[] cageList;
    }
 
    void add();
    int size() const;
    Cage& getCage(int id);
-   void setAnimalInCage(Animal* animal, int idCage, int a);
+   void setAnimalInCage(Animal* animal, int idCage, int idAnimal);
 };
